@@ -5,6 +5,7 @@
 #include "nan.h"
 
 extern "C" {
+    #include "balloon.h"
     #include "argon2.h"
     #include "bcrypt.h"
     #include "blake.h"
@@ -639,6 +640,24 @@ NAN_METHOD(yescrypt) {
 
 }
 
+NAN_METHOD(balloon) {
+
+   if (info.Length() < 1)
+       return THROW_ERROR_EXCEPTION("You must provide buffer to hash");
+
+   Local<Object> target = Nan::To<Object>(info[0]).ToLocalChecked();
+    
+   if(!Buffer::HasInstance(target))
+       return THROW_ERROR_EXCEPTION("Argument should be a buffer object.");
+
+   char * input = Buffer::Data(target);
+   char *output = (char*) malloc(sizeof(char) * 32);
+
+   balloon_128((unsigned char *)input, (unsigned char *)output);
+
+   info.GetReturnValue().Set(Nan::NewBuffer(output, 32).ToLocalChecked());
+}
+
 
 NAN_MODULE_INIT(init) {
     Nan::Set(target, Nan::New("lyra2z").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(lyra2z)).ToLocalChecked());
@@ -668,6 +687,7 @@ NAN_MODULE_INIT(init) {
     Nan::Set(target, Nan::New("fresh").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(fresh)).ToLocalChecked());
     Nan::Set(target, Nan::New("neoscrypt").ToLocalChecked(),Nan::GetFunction(Nan::New<FunctionTemplate>(neoscrypt)).ToLocalChecked());
     Nan::Set(target, Nan::New("yescrypt").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(yescrypt)).ToLocalChecked());
+    Nan::Set(target, Nan::New("balloon").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(balloon)).ToLocalChecked());
 }
 
 NODE_MODULE(multihashing, init)
