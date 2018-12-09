@@ -9,6 +9,7 @@ extern "C" {
     #include "argon2.h"
     #include "bcrypt.h"
     #include "blake.h"
+    #include "blake2.h"
     #include "c11.h"
     #include "cryptonight.h"
     #include "dcrypt.h"
@@ -147,6 +148,26 @@ NAN_METHOD(blake) {
     uint32_t input_len = Buffer::Length(target);
 
     blake_hash(input, output, input_len);
+
+    info.GetReturnValue().Set(Nan::NewBuffer(output, 32).ToLocalChecked());
+}
+
+NAN_METHOD(blake2b) {
+
+    if (info.Length() < 1)
+        return THROW_ERROR_EXCEPTION("You must provide one argument.");
+
+    Local<Object> target = Nan::To<Object>(info[0]).ToLocalChecked();
+
+    if(!Buffer::HasInstance(target))
+        return THROW_ERROR_EXCEPTION("Argument should be a buffer object.");
+
+    char * input = Buffer::Data(target);
+    char *output = (char*) malloc(sizeof(char) * 32);
+
+    uint32_t input_len = Buffer::Length(target);
+
+    blake2b_hash(input, output, input_len);
 
     info.GetReturnValue().Set(Nan::NewBuffer(output, 32).ToLocalChecked());
 }
@@ -646,7 +667,7 @@ NAN_METHOD(balloon) {
        return THROW_ERROR_EXCEPTION("You must provide buffer to hash");
 
    Local<Object> target = Nan::To<Object>(info[0]).ToLocalChecked();
-    
+
    if(!Buffer::HasInstance(target))
        return THROW_ERROR_EXCEPTION("Argument should be a buffer object.");
 
@@ -688,6 +709,8 @@ NAN_MODULE_INIT(init) {
     Nan::Set(target, Nan::New("neoscrypt").ToLocalChecked(),Nan::GetFunction(Nan::New<FunctionTemplate>(neoscrypt)).ToLocalChecked());
     Nan::Set(target, Nan::New("yescrypt").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(yescrypt)).ToLocalChecked());
     Nan::Set(target, Nan::New("balloon").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(balloon)).ToLocalChecked());
+    Nan::Set(target, Nan::New("blake2b").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(blake2b)).ToLocalChecked());
+
 }
 
 NODE_MODULE(multihashing, init)
