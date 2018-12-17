@@ -5,8 +5,6 @@
 #include <inttypes.h> // for SCNx64 macro
 #include <stdio.h>    // printf/scanf
 #include <stdlib.h>   // exit
-#include <unistd.h>   // getopt
-#include <assert.h>   // d'uh
 
 // arbitrary length of header hashed into siphash key
 #define HEADERLEN 80
