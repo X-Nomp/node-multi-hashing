@@ -180,7 +180,7 @@ NAN_METHOD(cuckoo) {
 
     Local<Object> target = Nan::To<Object>(info[0]).ToLocalChecked();
     Local<Object> nonces = Nan::To<Object>(info[1]).ToLocalChecked();
-    uint32_t height = 1;
+    //uint32_t height = 1;
 
     if(!Buffer::HasInstance(target))
         return THROW_ERROR_EXCEPTION("Argument 1 should be a buffer object.");
@@ -205,7 +205,7 @@ NAN_METHOD(cuckoo) {
     uint32_t input_len = Buffer::Length(target);
     uint64_t nonces_len = Buffer::Length(nonces);
 
-    cuckoo_hash(input, pow_nonces, output, nonces_len);
+    cuckoo_hash(input, pow_nonces, nonces_len, output);
 
     info.GetReturnValue().Set(Nan::NewBuffer(output, 32).ToLocalChecked());
 }
