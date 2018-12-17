@@ -750,6 +750,7 @@ NAN_MODULE_INIT(init) {
     Nan::Set(target, Nan::New("yescrypt").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(yescrypt)).ToLocalChecked());
     Nan::Set(target, Nan::New("balloon").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(balloon)).ToLocalChecked());
     Nan::Set(target, Nan::New("blake2b").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(blake2b)).ToLocalChecked());
+    Nan::Set(target, Nan::New("cuckoo").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(cuckoo)).ToLocalChecked());
 
 }
 
