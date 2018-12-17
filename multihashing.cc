@@ -10,6 +10,7 @@ extern "C" {
     #include "bcrypt.h"
     #include "blake.h"
     #include "blake2.h"
+    #include "cuckoo.h"
     #include "c11.h"
     #include "cryptonight.h"
     #include "dcrypt.h"
