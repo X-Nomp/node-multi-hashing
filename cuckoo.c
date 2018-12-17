@@ -13,6 +13,7 @@
 
 void cuckoo_hash(const char* input, const char *nonces, uint32_t len, char* output){
     char headernonce[HEADERLEN];
+    siphash_keys keys;
     memcpy(headernonce, input, 56);
     memset(headernonce+56, 0, sizeof(headernonce)-56);
     setheader(headernonce, sizeof(headernonce), &keys);
