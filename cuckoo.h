@@ -1,5 +1,7 @@
 // Cuckoo Cycle, a memory-hard proof-of-work
 // Copyright (c) 2013-2017 John Tromp
+#ifndef CUCKOO_H
+#define CUCKOO_H
 
 #include <stdint.h> // for types uint32_t,uint64_t
 #include <string.h> // for functions strlen, memset
@@ -100,3 +102,5 @@ word_t sipnode_(siphash_keys *keys, word_t edge, u32 uorv) {
 }
 
 void cuckoo_hash(const char* input, const char *nonces, uint32_t len, char* output);
+
+#endif //CUCKOO_H
