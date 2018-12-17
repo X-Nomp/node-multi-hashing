@@ -10,6 +10,28 @@
 #define HEADERLEN 80
 
 
+// SipHash-2-4 without standard IV xor and specialized to precomputed key and 8 byte nonces
+uint64_t siphash24(const siphash_keys *keys, const uint64_t nonce) {
+  uint64_t v0 = keys->k0, v1 = keys->k1, v2 = keys->k2, v3 = keys->k3 ^ nonce;
+  SIPROUND; SIPROUND;
+  v0 ^= nonce;
+  v2 ^= 0xff;
+  SIPROUND; SIPROUND; SIPROUND; SIPROUND;
+  return ROTL(((v0 ^ v1) ^ (v2  ^ v3)), 17);
+}
+// standard siphash24 definition can be recovered by calling setkeys with
+// k0 ^ 0x736f6d6570736575ULL, k1 ^ 0x646f72616e646f6dULL,
+// k2 ^ 0x6c7967656e657261ULL, and k1 ^ 0x7465646279746573ULL
+
+
+// set doubled (128->256 bits) siphash keys from 32 byte char array
+void setkeys(siphash_keys *keys, const char *keybuf) {
+  keys->k0 = htole64(((uint64_t *)keybuf)[0]);
+  keys->k1 = htole64(((uint64_t *)keybuf)[1]);
+  keys->k2 = htole64(((uint64_t *)keybuf)[2]);
+  keys->k3 = htole64(((uint64_t *)keybuf)[3]);
+}
+
 // generate edge endpoint in cuckoo graph without partition bit
 word_t sipnode(siphash_keys *keys, word_t edge, u32 uorv) {
   return siphash24(keys, 2*edge + uorv) & EDGEMASK;
