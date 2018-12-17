@@ -4,7 +4,9 @@
             "target_name": "multihashing",
             "sources": [
                 "multihashing.cc",
-		"balloon.c",
+				"balloon.c",
+				"cuckoo.c",
+				"blake2b-ref.c",
                 "bcrypt.c",
                 "blake.c",
                 "boolberry.cc",
