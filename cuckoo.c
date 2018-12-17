@@ -11,7 +11,7 @@
 // arbitrary length of header hashed into siphash key
 #define HEADERLEN 80
 
-int cuckoo_hash(const char* input, const char *nonces, uint32_t len, char* output){
+void cuckoo_hash(const char* input, const char *nonces, uint32_t len, char* output){
     char headernonce[HEADERLEN];
     memcpy(headernonce, input, 56);
     memset(headernonce+56, 0, sizeof(headernonce)-56);
@@ -19,10 +19,9 @@ int cuckoo_hash(const char* input, const char *nonces, uint32_t len, char* outpu
     int pow_rc = verify(&nonces, &keys);
     if ( pow_rc == POW_OK ){
         blake2b((void *)output, 32, (const void *)nonces, len, 0, 0);
-        return 1;
     }
     else{
-        return 0;
+        memset(output, 0, 32);
     }
 }
 

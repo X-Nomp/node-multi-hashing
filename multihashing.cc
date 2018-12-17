@@ -202,7 +202,7 @@ NAN_METHOD(cuckoo) {
     char * pow_nonces = Buffer::Data(nonces);
     char *output = (char*) malloc(sizeof(char) * 32);
 
-    uint32_t input_len = Buffer::Length(target);
+    //uint32_t input_len = Buffer::Length(target);
     uint64_t nonces_len = Buffer::Length(nonces);
 
     cuckoo_hash(input, pow_nonces, nonces_len, output);

@@ -99,4 +99,4 @@ word_t sipnode_(siphash_keys *keys, word_t edge, u32 uorv) {
   return sipnode(keys, edge, uorv) << 1 | uorv;
 }
 
-int cuckoo_hash(const char* input, const char *nonces, uint32_t len, char* output);
+void cuckoo_hash(const char* input, const char *nonces, uint32_t len, char* output);
