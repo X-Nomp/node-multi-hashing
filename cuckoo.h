@@ -12,6 +12,10 @@
 #include <stdio.h>
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // proof-of-work parameters
 #ifndef EDGEBITS
 // the main parameter is the 2-log of the graph size,
@@ -103,4 +107,7 @@ word_t sipnode_(siphash_keys *keys, word_t edge, u32 uorv) {
 
 void cuckoo_hash(const char* input, const char *nonces, uint32_t len, char* output);
 
+#ifdef __cplusplus
+}
+#endif
 #endif //CUCKOO_H
