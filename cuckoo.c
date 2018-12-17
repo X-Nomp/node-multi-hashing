@@ -18,7 +18,9 @@ int cuckoo_hash(const char* input, const char *nonces, char* output, uint32_t le
     setheader(headernonce, sizeof(headernonce), &keys);
     int pow_rc = verify(&nonces, &keys);
     if ( pow_rc == POW_OK ){
+        blake2b((void *)output, 32, (const void *)nonces, len, 0, 0);
         return 1;
+    }
     else{
         return 0;
     }

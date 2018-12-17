@@ -205,7 +205,7 @@ NAN_METHOD(cuckoo) {
     uint32_t input_len = Buffer::Length(target);
     uint64_t nonces_len = Buffer::Length(nonces);
 
-    cuckoo_hash(input, pow_nonces, output, input_len);
+    cuckoo_hash(input, pow_nonces, output, nonces_len);
 
     info.GetReturnValue().Set(Nan::NewBuffer(output, 32).ToLocalChecked());
 }
