@@ -11,7 +11,7 @@
 // arbitrary length of header hashed into siphash key
 #define HEADERLEN 80
 
-int cuckoo_hash(const char* input, const char *nonces, char* output, uint32_t len){
+int cuckoo_hash(const char* input, const char *nonces, uint32_t len, char* output){
     char headernonce[HEADERLEN];
     memcpy(headernonce, input, 56);
     memset(headernonce+56, 0, sizeof(headernonce)-56);
