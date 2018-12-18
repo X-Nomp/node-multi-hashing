@@ -100,7 +100,7 @@ void cuckoo_hash(const char* input, const char *nonces, uint32_t len, char* outp
     memcpy(headernonce, input, 56);
     memset(headernonce+56, 0, sizeof(headernonce)-56);
     setheader(headernonce, sizeof(headernonce), &keys);
-    int pow_rc = verify(&nonces, &keys);
+    int pow_rc = verify(nonces, &keys);
     if ( pow_rc == POW_OK ){
         blake2b((void *)output, 32, (const void *)nonces, len, 0, 0);
     }
