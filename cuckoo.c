@@ -105,7 +105,7 @@ void cuckoo_hash(const char* input, const char *nonces, uint32_t len, char* outp
         blake2b((void *)output, 32, (const void *)nonces, len, 0, 0);
     }
     else{
-        memset(output, 0, 32);
+        memset(output, 255, 32);
     }
 }
 
